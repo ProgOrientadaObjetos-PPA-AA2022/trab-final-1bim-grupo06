@@ -1,7 +1,9 @@
 
 package paquete02;
 
-public class Propietario {
+import java.io.Serializable;
+
+public class Propietario implements Serializable {
 
     private String nombres;
     private String apellidos;
