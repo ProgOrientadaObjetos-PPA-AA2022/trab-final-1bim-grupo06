@@ -1,11 +1,12 @@
 
 package paquete06;
+import java.io.Serializable;
 import paquete02.Propietario;
 import paquete03.Barrio;
 import paquete04.Ciudad;
 import paquete05.Constructora;
 
-public class Casa {
+public class Casa implements Serializable{
     private Propietario propietario;
     private double preciom2;
     private double nm2;

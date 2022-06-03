@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package paquete02;
+package paquete03;
 
 import java.io.EOFException;
 import java.io.File;
@@ -10,20 +10,20 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+
 /**
  *
  * @author jpvpv
  */
-public class LecturaArchivoPropietario {
-    
+public class LecturaArchivoBarrio {
     private ObjectInputStream entrada;
-    private ArrayList<Propietario> listaPropietarios;
+    private ArrayList<Barrio> listaBarrios;
     private String nombreArchivo;
-    private String identificacion;
-    private Propietario propietarioBuscado;
+    private String nombre;
+    private Barrio barrioBuscado;
     
     
-    public LecturaArchivoPropietario(String x) {
+    public LecturaArchivoBarrio(String x) {
         nombreArchivo = x;
         File f = new File(nombreArchivo);
         if (f.exists()) {
@@ -39,15 +39,15 @@ public class LecturaArchivoPropietario {
         }
     }
     
-    public void establecerListaPropietarios() {
-        listaPropietarios = new ArrayList<>();
+    public void establecerListaBarrios() {
+        listaBarrios = new ArrayList<>();
         File f = new File(nombreArchivo);
         if (f.exists()) {
             while (true) {
                 
                 try {
-                    Propietario registro = (Propietario) entrada.readObject();
-                    listaPropietarios.add(registro);
+                    Barrio registro = (Barrio) entrada.readObject();
+                    listaBarrios.add(registro);
                 } catch (EOFException endOfFileException) {
                     break;
                 } catch (IOException ex) {
@@ -70,11 +70,11 @@ public class LecturaArchivoPropietario {
         nombreArchivo = x;
     }
     
-    public void establecerIdentificacion(String x) {
-        identificacion = x;
+    public void establecerNombre(String x) {
+        nombre = x;
     }
     
-    public void establecerPropietarioBuscado() {
+    public void establecerBarrioBuscado() {
         
         File f = new File(nombreArchivo);
 
@@ -83,9 +83,9 @@ public class LecturaArchivoPropietario {
             if (f.exists()) {
                 
                 try {
-                    Propietario registro = (Propietario) entrada.readObject();
-                    if(registro.obtenerIdentificacion().equals(identificacion)){
-                        propietarioBuscado = registro;
+                    Barrio registro = (Barrio) entrada.readObject();
+                    if(registro.obtenerNombre().equals(nombre)){
+                        barrioBuscado = registro;
                         break;
                     }
                 } catch (EOFException endOfFileException) {
@@ -107,29 +107,32 @@ public class LecturaArchivoPropietario {
         }
     }
     
-    public ArrayList<Propietario> obtenerListaPropietarios() {
-        return listaPropietarios;
+    public ArrayList<Barrio> obtenerListaBarrios() {
+        return listaBarrios;
     }
 
     public String obtenerNombreArchivo() {
         return nombreArchivo;
     }
-      
-    public Propietario obtenerPropietarioBuscado() {
-        return propietarioBuscado;
+    
+    public String obtenerNombre() {
+        return nombre;
+    }
+        
+    public Barrio obtenerBarrioBuscado() {
+        return barrioBuscado;
     }
     
     @Override
     public String toString() {
-        String cadena = "Lista de Propietarios\n" +
+        String cadena = "Lista de Barrios\n" +
                 "--------------------------------\n";
-        for (int i = 0; i < listaPropietarios.size(); i++) {
-            Propietario p = listaPropietarios.get(i);
-            cadena = String.format("%s(%d) %s-%s-%s\n", cadena,
+        for (int i = 0; i < listaBarrios.size(); i++) {
+            Barrio p = listaBarrios.get(i);
+            cadena = String.format("%s(%d) %s-%s\n", cadena,
                     i + 1,
-                    p.obtenerNombres(),
-                    p.obtenerApellidos(),
-                    p.obtenerIdentificacion());
+                    p.obtenerNombre(),
+                    p.obtenerReferencia());
         }
         cadena = String.format("%s--------------------------------", cadena);
         return cadena;
@@ -146,6 +149,6 @@ public class LecturaArchivoPropietario {
                 "--------------------------\n"
                 + "ERROR AL CERRAR EL ARCHIVO\n"
                 + "--------------------------");
-        }   
+        }
     }
 }

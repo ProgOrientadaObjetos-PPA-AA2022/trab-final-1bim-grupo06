@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package paquete02;
+package paquete05;
 
 import java.io.EOFException;
 import java.io.File;
@@ -14,16 +14,15 @@ import java.util.ArrayList;
  *
  * @author jpvpv
  */
-public class LecturaArchivoPropietario {
-    
+public class LecturaArchivoConstructora {
     private ObjectInputStream entrada;
-    private ArrayList<Propietario> listaPropietarios;
+    private ArrayList<Constructora> listaConstructoras;
     private String nombreArchivo;
-    private String identificacion;
-    private Propietario propietarioBuscado;
+    private String idEmpresa;
+    private Constructora constructoraBuscado;
     
     
-    public LecturaArchivoPropietario(String x) {
+    public LecturaArchivoConstructora(String x) {
         nombreArchivo = x;
         File f = new File(nombreArchivo);
         if (f.exists()) {
@@ -39,15 +38,15 @@ public class LecturaArchivoPropietario {
         }
     }
     
-    public void establecerListaPropietarios() {
-        listaPropietarios = new ArrayList<>();
+    public void establecerListaConstructoras() {
+        listaConstructoras = new ArrayList<>();
         File f = new File(nombreArchivo);
         if (f.exists()) {
             while (true) {
                 
                 try {
-                    Propietario registro = (Propietario) entrada.readObject();
-                    listaPropietarios.add(registro);
+                    Constructora registro = (Constructora) entrada.readObject();
+                    listaConstructoras.add(registro);
                 } catch (EOFException endOfFileException) {
                     break;
                 } catch (IOException ex) {
@@ -70,11 +69,11 @@ public class LecturaArchivoPropietario {
         nombreArchivo = x;
     }
     
-    public void establecerIdentificacion(String x) {
-        identificacion = x;
+    public void establecerIdConstructora(String x) {
+        idEmpresa = x;
     }
     
-    public void establecerPropietarioBuscado() {
+    public void establecerConstructoraBuscado() {
         
         File f = new File(nombreArchivo);
 
@@ -83,9 +82,9 @@ public class LecturaArchivoPropietario {
             if (f.exists()) {
                 
                 try {
-                    Propietario registro = (Propietario) entrada.readObject();
-                    if(registro.obtenerIdentificacion().equals(identificacion)){
-                        propietarioBuscado = registro;
+                    Constructora registro = (Constructora) entrada.readObject();
+                    if(registro.obtenerIdEmpresa().equals(idEmpresa)){
+                        constructoraBuscado = registro;
                         break;
                     }
                 } catch (EOFException endOfFileException) {
@@ -107,29 +106,28 @@ public class LecturaArchivoPropietario {
         }
     }
     
-    public ArrayList<Propietario> obtenerListaPropietarios() {
-        return listaPropietarios;
+    public ArrayList<Constructora> obtenerListaConstructoras() {
+        return listaConstructoras;
     }
 
     public String obtenerNombreArchivo() {
         return nombreArchivo;
     }
       
-    public Propietario obtenerPropietarioBuscado() {
-        return propietarioBuscado;
+    public Constructora obtenerConstructoraBuscado() {
+        return constructoraBuscado;
     }
     
     @Override
     public String toString() {
-        String cadena = "Lista de Propietarios\n" +
+        String cadena = "Lista de Constructoras\n" +
                 "--------------------------------\n";
-        for (int i = 0; i < listaPropietarios.size(); i++) {
-            Propietario p = listaPropietarios.get(i);
-            cadena = String.format("%s(%d) %s-%s-%s\n", cadena,
+        for (int i = 0; i < listaConstructoras.size(); i++) {
+            Constructora p = listaConstructoras.get(i);
+            cadena = String.format("%s(%d) %s-%s\n", cadena,
                     i + 1,
-                    p.obtenerNombres(),
-                    p.obtenerApellidos(),
-                    p.obtenerIdentificacion());
+                    p.obtenerNombre(),
+                    p.obtenerIdEmpresa());
         }
         cadena = String.format("%s--------------------------------", cadena);
         return cadena;
@@ -146,6 +144,6 @@ public class LecturaArchivoPropietario {
                 "--------------------------\n"
                 + "ERROR AL CERRAR EL ARCHIVO\n"
                 + "--------------------------");
-        }   
+        }
     }
 }

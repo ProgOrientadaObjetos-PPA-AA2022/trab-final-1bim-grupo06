@@ -1,8 +1,10 @@
 
 package paquete03;
 
+import java.io.Serializable;
 
-public class Barrio {
+
+public class Barrio implements Serializable{
     
     private String nombre;
     private String referencia;

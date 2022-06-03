@@ -1,7 +1,9 @@
 
 package paquete05;
 
-public class Constructora {
+import java.io.Serializable;
+
+public class Constructora implements Serializable {
     private String nombre;
     private String idEmpresa;
     
